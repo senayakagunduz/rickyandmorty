@@ -3,8 +3,8 @@ import { CharacterType } from '../interface/Character';
 
 const api_url="https://rickandmortyapi.com/api"
 
-export const getCharacters=async()=>{
-    const response:AxiosResponse=await axios.get<CharacterType[]>((`${api_url}/character`));
+export const getCharacters = async (pageNumber: number) => {
+    const response: AxiosResponse = await axios.get<CharacterType[]>(`${api_url}/character?page=${pageNumber}`);
     return response.data;
 }
 

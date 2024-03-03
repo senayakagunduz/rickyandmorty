@@ -5,31 +5,35 @@ import { Link } from "react-router-dom"
 import { FaRegHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToFavorite } from "../store/favorite-slice";
+import Pagination from "../components/Pagination";
 
 const CharacterListPage: React.FC = () => {
     const [characterDatas, setCharacterDatas] = useState<CharacterType[]>([])
     const [filterStatus, setFilterStatus] = useState<string>("");
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
-    const [filled, setFilled]=useState<boolean>(false);
+    const [filled, setFilled] = useState<boolean>(false);
+    const [pageNumber, setPageNumber] = useState<number>(1);
+    const [pageCount, setPageCount] = useState<number>(0);
 
-    const toggleFill=()=>{
-      setFilled(!filled)
+    const toggleFill = () => {
+        setFilled(!filled)
     }
 
     const dispatch = useDispatch();
 
-    const loadData = async () => {
+    const loadData = async (pageNumber:number) => {
         try {
-            const getAllCharacters = await getCharacters();
+            const getAllCharacters = await getCharacters(pageNumber)
             console.log(getAllCharacters, "getAllCharacters")
             setCharacterDatas(getAllCharacters.results)
+            setPageCount(getAllCharacters.info.pages);
         } catch (error) {
             console.log(error);
         }
     }
     useEffect(() => {
-        loadData();
-    }, [])
+        loadData(pageNumber);
+    }, [pageNumber])
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterStatus(e.target.value.toLowerCase())
@@ -39,7 +43,10 @@ const CharacterListPage: React.FC = () => {
         console.log(item, "item")
         setIsFavorite(true);
     }
-
+    const handlePageChange = (selectedPage: number) => {
+        setPageNumber(selectedPage + 1);
+        // loadData();
+    };
     return (
         <section className="character-list">
             <select onChange={handleFilterChange} value={filterStatus}>
@@ -63,14 +70,18 @@ const CharacterListPage: React.FC = () => {
                                         <li><p>{item.status ? item.status : ""}</p></li>
                                     </ul>
                                 </Link>
-                                <button className="heart-cont" style={{borderColor:"transparent"}} onClick={toggleFill}>
+                                <button className="heart-cont" style={{ borderColor: "transparent" }} onClick={toggleFill}>
                                     <FaRegHeart onClick={() => handleClick(item)} size={30} />
                                 </button>
                             </div>
                         ))
                 }
             </div>
-
+            <Pagination
+                pageNumber={pageNumber}
+                pageCount={pageCount}
+                onPageChange={handlePageChange}
+            />
         </section>
     )
 }

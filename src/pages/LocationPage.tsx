@@ -66,8 +66,3 @@ const LocationPage: React.FC = () => {
 }
 export default LocationPage
 
-{/* <Link className="list-link" to="/characters-location" 
-    state={{stateData}} >List all Characters</Link> */}
-
-// const stateData = { locationId: selectedLocation?.id };
-

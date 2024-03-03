@@ -6,7 +6,6 @@ import { CharacterType } from '../interface/Character';
 import { useDispatch } from 'react-redux';
 import { addToFavorite, removeFavorite } from '../store/favorite-slice';
 import { getCharacterList, setCharacterList } from '../store/characters-slice';
-import Pagination from '../components/Pagination';
 
 
 const LocationsCharacters = () => {
@@ -77,7 +76,7 @@ const LocationsCharacters = () => {
                         item => filterStatus === "" ||
                             item.status.toLowerCase() === filterStatus).map((item) => (
                                 <div key={item.id} className="card">
-                                    <img src={item.image} alt="img" />
+                                    <img src={item.image} alt="img" className='location-character-img'/>
                                     <ul>
                                         <li>
                                             <Link to={`/character/${item.id}`}>{item.name}</Link>
@@ -98,11 +97,6 @@ const LocationsCharacters = () => {
                             ))
                 }
             </div>
-            {/* <Pagination
-                info={info}
-                pageNumber={pageNumber}
-                updatePageNumber={updatePageNumber}
-            /> */}
         </div>
     )
 }
