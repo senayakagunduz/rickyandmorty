@@ -1,7 +1,6 @@
 import {  useDispatch, useSelector } from "react-redux"
 import { Favorite } from "../interface";
 import { Link } from "react-router-dom";
-import CardItem from "../components/Card";
 import { removeFavorite } from "../store/favorite-slice";
 import FavoriteCardItem from "../components/FavoriteCard";
 const FavoritesPage:React.FC = () => {

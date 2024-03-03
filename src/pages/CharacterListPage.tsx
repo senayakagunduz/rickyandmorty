@@ -10,16 +10,13 @@ import Pagination from "../components/Pagination";
 const CharacterListPage: React.FC = () => {
     const [characterDatas, setCharacterDatas] = useState<CharacterType[]>([])
     const [filterStatus, setFilterStatus] = useState<string>("");
-    const [isFavorite, setIsFavorite] = useState<boolean>(false);
     const [filled, setFilled] = useState<boolean>(false);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(0);
-
+    const dispatch = useDispatch();
     const toggleFill = () => {
         setFilled(!filled)
     }
-
-    const dispatch = useDispatch();
 
     const loadData = async (pageNumber:number) => {
         try {
@@ -40,12 +37,10 @@ const CharacterListPage: React.FC = () => {
     }
     const handleClick = (item: CharacterType) => {
         dispatch(addToFavorite(item));
-        console.log(item, "item")
-        setIsFavorite(true);
+        console.log(item, "item")  
     }
     const handlePageChange = (selectedPage: number) => {
         setPageNumber(selectedPage + 1);
-        // loadData();
     };
     return (
         <section className="character-list">

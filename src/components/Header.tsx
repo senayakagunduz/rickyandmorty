@@ -4,7 +4,7 @@ import { TiLocationOutline } from "react-icons/ti";
 import { GoPeople } from "react-icons/go";
 import { useSelector } from 'react-redux';
 import { Favorite } from '../interface';
-import { useState } from 'react';
+
 const links = [
   { id: 1, path: '/location', text: "Location", icon: TiLocationOutline },
   { id: 2, path: '/character', text: "Characters", icon: GoPeople },
