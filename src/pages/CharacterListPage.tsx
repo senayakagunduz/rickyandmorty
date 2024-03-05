@@ -2,22 +2,20 @@ import { useEffect, useState } from "react"
 import { CharacterType } from "../interface/Character"
 import { getCharacters } from "../service/character-service"
 import { Link } from "react-router-dom"
-import { FaRegHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { addToFavorite } from "../store/favorite-slice";
+import { addToFavorite, removeFavorite } from "../store/favorite-slice";
 import Pagination from "../components/Pagination";
+import Heart from "react-animated-heart";
+import { SingleCharacterType } from "../interface/SingleCharacter";
 
 const CharacterListPage: React.FC = () => {
     const [characterDatas, setCharacterDatas] = useState<CharacterType[]>([])
     const [filterStatus, setFilterStatus] = useState<string>("");
-    const [filled, setFilled] = useState<boolean>(false);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(0);
+    const [isClickMap, setIsClickMap] = useState<ClickType>({});
     const dispatch = useDispatch();
-    const toggleFill = () => {
-        setFilled(!filled)
-    }
-
+   
     const loadData = async (pageNumber:number) => {
         try {
             const getAllCharacters = await getCharacters(pageNumber)
@@ -35,13 +33,22 @@ const CharacterListPage: React.FC = () => {
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterStatus(e.target.value.toLowerCase())
     }
-    const handleClick = (item: CharacterType) => {
-        dispatch(addToFavorite(item));
-        console.log(item, "item")  
-    }
+   
     const handlePageChange = (selectedPage: number) => {
         setPageNumber(selectedPage + 1);
     };
+
+    const toggleHeart=(id:number,item:SingleCharacterType)=>{
+        setIsClickMap((prevState)=>({
+            ...prevState,
+            [id]:!prevState[id]
+        }))
+        if(!isClickMap[id]){
+            dispatch(addToFavorite(item))
+        }else{
+            dispatch(removeFavorite(item))
+        }
+    }
     return (
         <section className="character-list">
             <select onChange={handleFilterChange} value={filterStatus}>
@@ -65,9 +72,9 @@ const CharacterListPage: React.FC = () => {
                                         <li><p>{item.status ? item.status : ""}</p></li>
                                     </ul>
                                 </Link>
-                                <button className="heart-cont" style={{ borderColor: "transparent" }} onClick={toggleFill}>
-                                    <FaRegHeart onClick={() => handleClick(item)} size={30} />
-                                </button>
+                             <Heart 
+                             isClick={isClickMap[item.id]}
+                             onClick={()=>toggleHeart(item.id,item)} />
                             </div>
                         ))
                 }
@@ -82,3 +89,8 @@ const CharacterListPage: React.FC = () => {
 }
 
 export default CharacterListPage
+
+// const handleClick = (item: CharacterType) => {
+//     dispatch(addToFavorite(item));
+//     console.log(item, "item")  
+// }

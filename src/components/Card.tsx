@@ -1,18 +1,24 @@
 import { useDispatch } from "react-redux";
 import { addToFavorite, removeFavorite } from "../store/favorite-slice";
+import Heart from "react-animated-heart";
+import { useState } from "react";
+import { CharacterType } from "../interface";
 
-const CardItem = (props: { item: any, removeFromFavorites: any}) => {
+const CardItem = (props: { item: any, removeFromFavorites: any }) => {
+    const[isClickMap, setIsClickMap]=useState<ClickType>({});
     const { item } = props;
     const dispatch = useDispatch();
 
-    const handleRemoveFromFavorite = () => {
-        dispatch(removeFavorite(item));
-        removeFavorite(item);
-    };
-
-    const handleAddToFavorite = () => {
-        dispatch(addToFavorite(item));
-        addToFavorite(item);
+    const toggleHeart=(id:number,item:CharacterType)=>{
+        setIsClickMap((prevState)=>({
+            ...prevState,
+            [id]:!prevState[id]
+        }))
+        if(!isClickMap[id]){
+            dispatch(addToFavorite(item))
+        }else{
+            dispatch(removeFavorite(item))
+        }
     }
 
     return (
@@ -29,8 +35,11 @@ const CardItem = (props: { item: any, removeFromFavorites: any}) => {
                     <p>Gender: {item?.gender}</p>
                     {/* <p>Origin.Name: {item?.origin.name}</p> */}
                     <p>Origin.Url: {item?.origin?.url}</p>
-                    <button onClick={handleRemoveFromFavorite}>Remove from Favorites</button>
-                    <button onClick={handleAddToFavorite}>Add to Favorites</button>
+                    <Heart
+                        isClick={isClickMap[item.id]}
+                        onClick={() =>
+                            toggleHeart(item.id, item)}
+                    />
                 </div>
             </div>
         </div>

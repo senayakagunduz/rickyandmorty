@@ -23,6 +23,7 @@ export const favoriteAmountSlice = createSlice({
         },
         removeFavorite: (state, action: PayloadAction<FavoriteItem>) => {
             state.favoriteItems = state.favoriteItems.filter(item => item.id !== action.payload.id);
+            state.quantity--;
             localStorage.setItem("favoriteItems", JSON.stringify(state.favoriteItems));
         }
     }
