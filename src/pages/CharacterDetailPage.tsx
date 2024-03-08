@@ -38,7 +38,7 @@ const CharacterDetailPage: React.FC = () => {
 
     return (
         <div className="container">
-            <CardItem item={characterData} removeFromFavorites={removeFromFavorites} />
+            <CardItem item={characterData}/>
         </div>
     )
 }

@@ -12,7 +12,7 @@ const FavoriteCardItem = (props: { item: any, removeFromFavorites: any}) => {
 
     return (
         <div className="container">
-            <div className="character-detail">
+            <div className="character-detail px-5">
                 <div className="image__container">
                     <img src={item?.image} alt="Character Image" />
                 </div>
@@ -24,7 +24,7 @@ const FavoriteCardItem = (props: { item: any, removeFromFavorites: any}) => {
                     <p>Gender: {item?.gender}</p>
                     <p>Origin.Name: {item?.origin.name}</p>
                     <p>Origin.Url: {item?.origin?.url}</p>
-                    <button onClick={handleRemoveFromFavorite}>Remove from Favorites</button>
+                    <button className="d-inline" onClick={handleRemoveFromFavorite}>Remove from Favorites</button>
                 </div>
             </div>
         </div>

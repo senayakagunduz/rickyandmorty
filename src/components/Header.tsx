@@ -1,17 +1,24 @@
 import { Link } from 'react-router-dom';
-import { MdFavoriteBorder } from "react-icons/md";
+import { FaRegHeart } from "react-icons/fa";
 import { TiLocationOutline } from "react-icons/ti";
 import { GoPeople } from "react-icons/go";
 import { useSelector } from 'react-redux';
 import { Favorite } from '../interface';
+import { SlBasket } from "react-icons/sl";
+import Badge from 'react-bootstrap/Badge';
+import { useState } from 'react';
+import Modal from './Modal';
+import { CartItem } from '../interface/CartItem';
 
 const links = [
   { id: 1, path: '/location', text: "Location", icon: TiLocationOutline },
   { id: 2, path: '/character', text: "Characters", icon: GoPeople },
 ]
 
-const Header = () => {
+const Header: React.FC = () => {
+  const [modalShow, setModalShow] = useState<boolean>(false)
   const favorite = useSelector((state: { favorite: Favorite }) => state.favorite);
+  const cart=useSelector((state:{cart:{cartItems:CartItem[]}})=>state.cart.cartItems);
  
   return (
     <header>
@@ -22,13 +29,7 @@ const Header = () => {
         <div>
         </div>
         <ul className='linkler'>
-          <li>
-            <Link to='/favorites' style={{ color: "white", display: "flex", alignItems: "center", paddingLeft: "15px",position:"relative" }}>
-            <span style={{position:"absolute",top:7,left:30}}>{favorite.favoriteItems.length}</span>
-            <MdFavoriteBorder style={{ fontSize: "50px",color:"red" }} />
-              Favorites
-            </Link>
-          </li>
+
           {
             links.map((link) => (
               <li key={link.id}>
@@ -38,6 +39,23 @@ const Header = () => {
                 </Link>
               </li>))
           }
+          <li className='pe-5'>
+            <Link to='/favorites'>
+              <FaRegHeart className='fs-2 text-light position-relative' />
+              <Badge pill bg="info" className='position-absolute'>
+                {favorite.favoriteItems.length}
+              </Badge>
+            </Link>
+          </li>
+          <li className='pe-5'>
+            <button onClick={() => setModalShow(true)} className='bg-transparent border-0'>
+              <SlBasket className='fs-2 text-light position-relative' />
+              <Badge pill bg="info" className='position-absolute'>
+               {cart.length}
+              </Badge>
+            </button>
+            <Modal show={modalShow} onHide={()=>setModalShow(false)}/>
+          </li>
         </ul>
       </nav>
     </header>

@@ -2,11 +2,16 @@ import { useEffect, useState } from "react"
 import { CharacterType } from "../interface/Character"
 import { getCharacters } from "../service/character-service"
 import { Link } from "react-router-dom"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToFavorite, removeFavorite } from "../store/favorite-slice";
 import Pagination from "../components/Pagination";
 import Heart from "react-animated-heart";
 import { SingleCharacterType } from "../interface/SingleCharacter";
+import Button from "react-bootstrap/esm/Button";
+import { addToCart } from "../store/cart-slice";
+import MyVerticallyCenteredModal from "../components/Modal";
+
+
 
 const CharacterListPage: React.FC = () => {
     const [characterDatas, setCharacterDatas] = useState<CharacterType[]>([])
@@ -14,9 +19,13 @@ const CharacterListPage: React.FC = () => {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(0);
     const [isClickMap, setIsClickMap] = useState<ClickType>({});
+
     const dispatch = useDispatch();
+    const showModal=useSelector((state:any)=>state.cart.showModal);
    
-    const loadData = async (pageNumber:number) => {
+    
+
+    const loadData = async (pageNumber: number) => {
         try {
             const getAllCharacters = await getCharacters(pageNumber)
             console.log(getAllCharacters, "getAllCharacters")
@@ -33,21 +42,33 @@ const CharacterListPage: React.FC = () => {
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterStatus(e.target.value.toLowerCase())
     }
-   
+
     const handlePageChange = (selectedPage: number) => {
         setPageNumber(selectedPage + 1);
     };
 
-    const toggleHeart=(id:number,item:SingleCharacterType)=>{
-        setIsClickMap((prevState)=>({
+    const toggleHeart = (id: number, item: SingleCharacterType) => {
+        setIsClickMap((prevState) => ({
             ...prevState,
-            [id]:!prevState[id]
+            [id]: !prevState[id]
         }))
-        if(!isClickMap[id]){
+        if (!isClickMap[id]) {
             dispatch(addToFavorite(item))
-        }else{
+        } else {
             dispatch(removeFavorite(item))
         }
+    }
+    const handleAddToCart=(item:SingleCharacterType)=>{
+       dispatch(addToCart({
+        id:item.id,
+        name:item.name,
+        quantity:1,
+        image:item.image,
+       }));
+    }
+
+    const closeModalHandler = () => {
+      
     }
     return (
         <section className="character-list">
@@ -57,7 +78,7 @@ const CharacterListPage: React.FC = () => {
                 <option value="unknown">Unknown</option>
                 <option value="">All Characters</option>
             </select>
-            <div className="character-cards">
+            <div className="character-cards posiyion-relative">
                 {
                     characterDatas.filter(
                         item => filterStatus === "" ||
@@ -72,9 +93,14 @@ const CharacterListPage: React.FC = () => {
                                         <li><p>{item.status ? item.status : ""}</p></li>
                                     </ul>
                                 </Link>
-                             <Heart 
-                             isClick={isClickMap[item.id]}
-                             onClick={()=>toggleHeart(item.id,item)} />
+                               
+                                    <Heart
+                                    
+                                        isClick={isClickMap[item.id]}
+                                        onClick={() => toggleHeart(item.id, item)}
+                                        styles={{position:"absolute",right:"0",top:"0"}} />
+                                    <Button className="rounded-0 mt-3 bg-primary" 
+                                    onClick={()=>handleAddToCart(item)}>Add to Cart</Button>
                             </div>
                         ))
                 }
@@ -84,13 +110,12 @@ const CharacterListPage: React.FC = () => {
                 pageCount={pageCount}
                 onPageChange={handlePageChange}
             />
+            <MyVerticallyCenteredModal
+                show={showModal}
+                onHide={closeModalHandler}
+                />
         </section>
     )
 }
 
 export default CharacterListPage
-
-// const handleClick = (item: CharacterType) => {
-//     dispatch(addToFavorite(item));
-//     console.log(item, "item")  
-// }

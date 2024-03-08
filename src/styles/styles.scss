@@ -219,10 +219,9 @@ header {
 
   .image__container {
     display: flex;
-    align-items: start;
+    align-items: center;
 
     img {
-      padding: 20px;
       max-width: 100%;
       border-radius: 20px;
     }

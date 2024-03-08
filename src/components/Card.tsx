@@ -4,9 +4,11 @@ import Heart from "react-animated-heart";
 import { useState } from "react";
 import { CharacterType } from "../interface";
 
-const CardItem = (props: { item: any, removeFromFavorites: any }) => {
+interface IProps{
+    item:CharacterType,
+}
+const CardItem:React.FC<IProps> = ({item}) => {
     const[isClickMap, setIsClickMap]=useState<ClickType>({});
-    const { item } = props;
     const dispatch = useDispatch();
 
     const toggleHeart=(id:number,item:CharacterType)=>{
@@ -23,23 +25,26 @@ const CardItem = (props: { item: any, removeFromFavorites: any }) => {
 
     return (
         <div className="container">
-            <div className="character-detail">
-                <div className="image__container">
-                    <img src={item?.image} alt="Character Image" />
+            <div className="character-detail px-5 py-5" >
+                <div className="image__container flex justify-content-center align-center">
+                    <img src={item?.image} alt="Character Image" className="img-fluid" />
                 </div>
-                <div className="container">
+                <div className="container" style={{position:"relative"}}>
                     <h1>Name:{item.name}</h1>
                     <p>Status: {item?.status}</p>
                     <p>Species: {item?.species}</p>
-                    <p>Type: {item?.type}</p>
+                    <p> {item.type ? `Type:${item.type}` : ""}</p>
                     <p>Gender: {item?.gender}</p>
-                    {/* <p>Origin.Name: {item?.origin.name}</p> */}
-                    <p>Origin.Url: {item?.origin?.url}</p>
+                    <p> {item.origin.url ? `Origin.Url:${item.origin.url}` : ""}</p>
+                    
                     <Heart
                         isClick={isClickMap[item.id]}
                         onClick={() =>
                             toggleHeart(item.id, item)}
+                        styles={{position:"absolute", top:"0", right:"0", paddingRight:"10px"}}
                     />
+                    
+                    
                 </div>
             </div>
         </div>
