@@ -58,6 +58,8 @@ const CharacterListPage: React.FC = () => {
             dispatch(removeFavorite(item))
         }
     }
+    //handleAddToCart dan itemı karşıladım, item:SingleCharacterType tipinde
+    //dispatch metodu ile slicedaki addToCart metoduyla verileri gönderiyorum , yani redux a (id,name,quantity,image) verilerini yazıcam, sonra modal dan gönderdiğim verileri çekicem
     const handleAddToCart=(item:SingleCharacterType)=>{
        dispatch(addToCart({
         id:item.id,
@@ -99,6 +101,7 @@ const CharacterListPage: React.FC = () => {
                                         isClick={isClickMap[item.id]}
                                         onClick={() => toggleHeart(item.id, item)}
                                         styles={{position:"absolute",right:"0",top:"0"}} />
+                                        {/*Butondan onClick de handleAddToCart fonksiyonuna itemı yolladım , item yukarıdan geliyor, her bir karakter Kartı yani*/}
                                     <Button className="rounded-0 mt-3 bg-primary" 
                                     onClick={()=>handleAddToCart(item)}>Add to Cart</Button>
                             </div>

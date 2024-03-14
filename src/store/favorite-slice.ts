@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { FavoriteItem } from "../interface";
+import { toast } from "react-toastify";
 
 
 const initialState = {
@@ -18,6 +19,7 @@ export const favoriteAmountSlice = createSlice({
                 state.quantity++;
                 console.log(state.favoriteItems, "favoriItems")
                 localStorage.setItem("favoriteItems", JSON.stringify(state.favoriteItems));
+                toast.success("character added to favorite",{position:"bottom-left"})
             }
 
         },
@@ -25,6 +27,7 @@ export const favoriteAmountSlice = createSlice({
             state.favoriteItems = state.favoriteItems.filter(item => item.id !== action.payload.id);
             state.quantity--;
             localStorage.setItem("favoriteItems", JSON.stringify(state.favoriteItems));
+            toast.success("added a new character to cart",{position:"bottom-left"})
         }
     }
 })

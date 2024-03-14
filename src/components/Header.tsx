@@ -51,6 +51,7 @@ const Header: React.FC = () => {
             <button onClick={() => setModalShow(true)} className='bg-transparent border-0'>
               <SlBasket className='fs-2 text-light position-relative' />
               <Badge pill bg="info" className='position-absolute'>
+                {/*cartdaki elemanların sayısını yazdım*/}
                {cart.length}
               </Badge>
             </button>

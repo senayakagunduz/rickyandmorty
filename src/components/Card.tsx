@@ -42,9 +42,7 @@ const CardItem:React.FC<IProps> = ({item}) => {
                         onClick={() =>
                             toggleHeart(item.id, item)}
                         styles={{position:"absolute", top:"0", right:"0", paddingRight:"10px"}}
-                    />
-                    
-                    
+                    />    
                 </div>
             </div>
         </div>
