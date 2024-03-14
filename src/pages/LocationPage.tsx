@@ -8,7 +8,7 @@ const LocationPage: React.FC = () => {
     const [locationDatas, setLocationDatas] = useState<LocationType[]>([]);
     const [selectedLocation, setSelectedLocation] = useState<LocationType | null>(null);
     const [showInfo, setShowInfo] = useState<boolean>(false);
-    const [showData, setShowData] = useState<boolean>(true)
+    const [showData] = useState<boolean>(true)
 
 
     const handleLocationClick = (location: LocationType) => {

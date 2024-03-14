@@ -7,17 +7,12 @@ import { useSelector } from "react-redux";
 import { CharacterType } from "../interface/Character";
 
 
-
 const CharacterDetailPage: React.FC = () => {
     const [characterData, setCharacterData] = useState<SingleCharacterType | null>(null);
     const { id } = useParams<{ id: string }>();
 
     const characterList = useSelector((state: { character: { characterList: CharacterType[] } }) => state.character.characterList);
    
-    const removeFromFavorites = (item: any) => {
-        console.log('Item removed from favorites:', item);
-    };
-
     console.log(characterList, "characterList")
     const loadData = async () => {
         try {

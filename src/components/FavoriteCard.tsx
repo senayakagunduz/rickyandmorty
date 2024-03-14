@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addToFavorite, removeFavorite } from "../store/favorite-slice";
+import { removeFavorite } from "../store/favorite-slice";
 
 const FavoriteCardItem = (props: { item: any, removeFromFavorites: any}) => {
     const { item } = props;

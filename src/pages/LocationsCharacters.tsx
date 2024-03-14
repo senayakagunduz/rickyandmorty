@@ -11,7 +11,7 @@ import { getCharacterList, setCharacterList } from '../store/characters-slice';
 const LocationsCharacters = () => {
     const [characterDatas, setCharacterDatas] = useState<CharacterType[]>([]);
     const [filterStatus, setFilterStatus] = useState<string>("");
-    const [filteredDatas, setFilteredDatas] = useState<CharacterType[]>([]);
+    const [filteredDatas] = useState<CharacterType[]>([]);
 
 
     const residents: (CharacterType)[] = [];
