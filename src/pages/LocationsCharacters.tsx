@@ -6,6 +6,11 @@ import { CharacterType } from '../interface/Character';
 import { useDispatch } from 'react-redux';
 import { addToFavorite, removeFavorite } from '../store/favorite-slice';
 import { getCharacterList, setCharacterList } from '../store/characters-slice';
+import Heart from 'react-animated-heart';
+import Button from 'react-bootstrap/esm/Button';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
+import Card from 'react-bootstrap/esm/Card';
 
 
 const LocationsCharacters = () => {
@@ -70,33 +75,36 @@ const LocationsCharacters = () => {
                 <option value="unknown">Unknown</option>
                 <option value="">All Characters</option>
             </select>
-            <div className="character-cards">
+            <Row className="my-3">
                 {
                     characterDatas.filter(
                         item => filterStatus === "" ||
                             item.status.toLowerCase() === filterStatus).map((item) => (
-                                <div key={item.id} className="card">
-                                    <img src={item.image} alt="img" className='location-character-img'/>
-                                    <ul>
-                                        <li>
-                                            <Link to={`/character/${item.id}`}>{item.name}</Link>
-                                        </li>
-                                        <li>
-                                            <p>{item.status ? item.status : ""}</p>
-                                        </li>
-                                    </ul>
-                                    <div className="button-container">
-                                        <button
-                                            onClick={() => handleAddToFavorite(item)}>
-                                            add favorite</button>
-                                        <button
-                                            onClick={() => handleRemoveFromFavorite(item)}>
-                                            remove favorite</button>
-                                    </div>
-                                </div>
-                            ))
-                }
-            </div>
+                                <Col key={item.id} xs={12} sm={6} lg={4} xl={3} className="mb-5">
+                                    <Card className="card" style={{ position: "relative" }} >
+                                        <Link to={`/character/${item.id}`}>
+                                            <Card.Img variant="top" src={item.image} alt="img" className="" />
+                                            <Card.Body className="card-body">
+                                                <Card.Title className="card-title text-center">{item.name}</Card.Title>
+                                                <span className="bg-success text-white p-2 rounded fs-5" style={{ position: "absolute", top: 5, left: 5 }}>{item.status ? item.status : ""}</span>
+                                            </Card.Body>
+                                        </Link>
+                                        <div className='d-flex justify-content-between align-items-center gap-4 py-2 px-3 '>
+                                            <Button
+                                                className='btn btn-info text-white'
+                                                onClick={() => handleAddToFavorite(item)}>
+                                                add favorite</Button>
+                                            <Button
+                                                className='btn btn-info text-white'
+                                                onClick={() => handleRemoveFromFavorite(item)}>
+                                                remove favorite</Button>
+                                        </div>
+
+                                    </Card>
+
+                                </Col>
+                            ))}
+            </Row>
         </div>
     )
 }

@@ -82,7 +82,7 @@ function MyVerticallyCenteredModal(props: IProps): JSX.Element {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={props.onHide} className=''>Close</Button>
       </Modal.Footer>
     </Modal>
   )
