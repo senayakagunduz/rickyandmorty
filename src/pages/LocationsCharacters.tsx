@@ -6,7 +6,6 @@ import { CharacterType } from '../interface/Character';
 import { useDispatch } from 'react-redux';
 import { addToFavorite, removeFavorite } from '../store/favorite-slice';
 import { getCharacterList, setCharacterList } from '../store/characters-slice';
-import Heart from 'react-animated-heart';
 import Button from 'react-bootstrap/esm/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';

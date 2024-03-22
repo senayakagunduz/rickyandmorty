@@ -13,7 +13,6 @@ import MyVerticallyCenteredModal from "../components/Modal";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Card from "react-bootstrap/esm/Card";
-import CardBody from "react-bootstrap/esm/CardBody";
 
 
 
