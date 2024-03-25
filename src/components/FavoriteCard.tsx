@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { removeFavorite } from "../store/favorite-slice";
+import Button from "react-bootstrap/esm/Button";
 
-const FavoriteCardItem = (props: { item: any, removeFromFavorites: any}) => {
+const FavoriteCardItem = (props: { item: any, removeFromFavorites: any }) => {
     const { item } = props;
     const dispatch = useDispatch();
 
@@ -11,20 +12,21 @@ const FavoriteCardItem = (props: { item: any, removeFromFavorites: any}) => {
     };
 
     return (
-        <div className="container">
-            <div className="character-detail px-5">
-                <div className="image__container">
-                    <img src={item?.image} alt="Character Image" />
-                </div>
-                <div className="container">
-                    <h1>Name:{item.name}</h1>
-                    <p>Status: {item?.status}</p>
-                    <p>Species: {item?.species}</p>
-                    <p>Type: {item?.type}</p>
-                    <p>Gender: {item?.gender}</p>
-                    <p>Origin.Name: {item?.origin.name}</p>
-                    <p>Origin.Url: {item?.origin?.url}</p>
-                    <button className="d-inline" onClick={handleRemoveFromFavorite}>Remove from Favorites</button>
+        <div className="carditem-container">
+            <div className="card_container">
+                <div className="car_data">
+                    <img src={item?.image} alt="Character Image" className="img-fluid" />
+                    <div className="pro_content">
+                        <h2>{item.name}</h2>
+                        <p>Status: {item?.status}</p>
+                        <p>Species: {item?.species}</p>
+                        <p> {item.type ? `Type:${item.type}` : ""}</p>
+                        <p>Gender: {item?.gender}</p>
+                        <p>Origin.Name: {item?.origin.name}</p>
+                        <p>Origin.Url: {item?.origin?.url}</p>
+                        <Button className="d-inline" onClick={handleRemoveFromFavorite}>Remove from Favorites</Button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -32,3 +34,4 @@ const FavoriteCardItem = (props: { item: any, removeFromFavorites: any}) => {
 }
 
 export default FavoriteCardItem
+

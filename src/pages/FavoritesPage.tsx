@@ -3,6 +3,7 @@ import { Favorite } from "../interface";
 import { Link } from "react-router-dom";
 import { removeFavorite } from "../store/favorite-slice";
 import FavoriteCardItem from "../components/FavoriteCard";
+import CardItem from "../components/Card";
 const FavoritesPage:React.FC = () => {
   const favorite=useSelector((state:{favorite:Favorite})=>state.favorite);
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const FavoritesPage:React.FC = () => {
              favorite.favoriteItems.map((item, id)=>(
               <FavoriteCardItem key={id} 
               item={item} removeFromFavorites={handleRemoveFromFavorites}/>
+  
              ))
             }
           </div>
